@@ -1,7 +1,8 @@
-function App() {
+import Login from "./components/Login/Login";
+function App () {
   return (
-    <h1>Overwatch Login</h1>
+    <Login />
   );
 }
 
-export default App;
+export default App
