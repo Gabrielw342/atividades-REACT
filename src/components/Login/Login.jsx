@@ -5,66 +5,97 @@ import logo from "../../assets/overwatch2logovsign.png";
 import logoText from "../../assets/Overwatch2logotext.png";
 
 function Login() {
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  const loginValido = email === "admin" && senha === "123";
+  const [verificarLogin, setVerificarLogin] = useState(false);
+  const [loginValido, setLoginValido] = useState(false);
+  const [tentouLogin, setTentouLogin] = useState(false);
 
-const mostrarErro =
-  email !== "" &&
-  senha !== "" &&
-  !loginValido;
+  const mostrarErro =
+    tentouLogin &&
+    !loginValido;
+
+  const mostrarSucesso =
+    tentouLogin &&
+    loginValido;
 
   useEffect(() => {
-    console.log("Email ou senha alterados");
-  }, [email, senha]);
+
+    if (verificarLogin) {
+
+      if (email === "gabriel" && senha === "123456789") {
+        setLoginValido(true);
+      } else {
+        setLoginValido(false);
+      }
+
+      setVerificarLogin(false);
+    }
+
+  }, [verificarLogin, email, senha]);
 
   return (
     <div
-  className={styles.container}
-  style={{
-    backgroundImage: `url(${background})`
-  }}
->
-      <img   
-      src={logo}
-      alt="Overwatch 2 logo"
-      className={styles.logo}
-      />
+      className={styles.container}
+      style={{
+        backgroundImage: `url(${background})`
+      }}
+    >
+      <div className={styles.loginBox}>
 
-      <img
-     src={logoText}
-     alt="Overwatch Text"
-     className={styles.logoText}
-     
-     />
+        <img
+          src={logo}
+          alt="Overwatch Logo"
+          className={styles.logo}
+        />
 
-      <input
-        className={styles.input}
-        type="text"
-        placeholder="Email or Phone"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-      />
+        <img
+          src={logoText}
+          alt="Overwatch Text"
+          className={styles.logoText}
+        />
 
-      <input
-        className={styles.input}
-        type="password"
-        placeholder="Password"
-        value={senha}
-        onChange={(event) => setSenha(event.target.value)}
-      />
+        <input
+          className={styles.input}
+          type="text"
+          placeholder="Email or Phone"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
 
-      <p>Login válido: {loginValido ? "Sim" : "Não"}</p>
+        <input
+          className={styles.input}
+          type="password"
+          placeholder="Password"
+          value={senha}
+          onChange={(event) => setSenha(event.target.value)}
+        />
 
-{mostrarErro && (
-  <p>Email ou senha incorretos. Verifique seus dados e tente novamente.</p>
-)}
+        {mostrarErro && (
+          <p className={styles.erro}>
+            Email ou senha incorretos.
+          </p>
+        )}
 
+        {mostrarSucesso && (
+          <p className={styles.sucesso}>
+            Login realizado com sucesso!
+          </p>
+        )}
 
-<button className={styles.button}>
-  {loginValido ? "ENTRAR" : "LOGIN"}
-</button>
+        <button
+          className={styles.button}
+          onClick={() => {
+            setTentouLogin(true);
+            setVerificarLogin(true);
+          }}
+        >
+          LOGIN
+        </button>
+
+      </div>
     </div>
   );
 }
