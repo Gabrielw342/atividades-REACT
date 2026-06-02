@@ -1,11 +1,21 @@
 import { useState, useEffect } from "react";
-import styles from "./Login.module.css";
+
+import {
+  Container,
+  LoginBox,
+  Logo,
+  LogoText, //agora entendi porque o professor nao gosta essa metodo parece horrivel
+  Input,
+  Button,
+  Erro,
+  Sucesso,
+} from "./Login.styles";
+
 import background from "../../assets/overwatchbackground.jpeg";
 import logo from "../../assets/overwatch2logovsign.png";
 import logoText from "../../assets/Overwatch2logotext.png";
 
 function Login() {
-
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -22,10 +32,11 @@ function Login() {
     loginValido;
 
   useEffect(() => {
-
     if (verificarLogin) {
-
-      if (email === "gabriel" && senha === "123456789") {
+      if (
+        email === "gabriel" &&
+        senha === "123456789"
+      ) {
         setLoginValido(true);
       } else {
         setLoginValido(false);
@@ -33,70 +44,65 @@ function Login() {
 
       setVerificarLogin(false);
     }
-
   }, [verificarLogin, email, senha]);
 
   return (
-    <div
-      className={styles.container}
+    <Container
       style={{
-        backgroundImage: `url(${background})`
+        backgroundImage: `url(${background})`,
       }}
     >
-      <div className={styles.loginBox}>
-
-        <img
+      <LoginBox>
+        <Logo
           src={logo}
           alt="Overwatch Logo"
-          className={styles.logo}
         />
 
-        <img
+        <LogoText
           src={logoText}
           alt="Overwatch Text"
-          className={styles.logoText}
         />
 
-        <input
-          className={styles.input}
+        <Input
           type="text"
           placeholder="Email or Phone"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(event) =>
+            setEmail(event.target.value)
+          }
         />
 
-        <input
-          className={styles.input}
+        <Input
           type="password"
           placeholder="Password"
           value={senha}
-          onChange={(event) => setSenha(event.target.value)}
+          onChange={(event) =>
+            setSenha(event.target.value)
+          }
         />
 
         {mostrarErro && (
-          <p className={styles.erro}>
+          <Erro>
             Email ou senha incorretos.
-          </p>
+          </Erro>
         )}
 
         {mostrarSucesso && (
-          <p className={styles.sucesso}>
+          <Sucesso>
             Login realizado com sucesso!
-          </p>
+          </Sucesso>
         )}
 
-        <button
-          className={styles.button}
+        <Button
           onClick={() => {
             setTentouLogin(true);
             setVerificarLogin(true);
           }}
         >
           LOGIN
-        </button>
-
-      </div>
-    </div>
+        </Button>
+      </LoginBox>
+    </Container>
   );
 }
 
