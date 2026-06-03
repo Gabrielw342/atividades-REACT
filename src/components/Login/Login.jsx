@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./Login.module.css";
 import background from "../../assets/overwatchbackground.jpeg";
@@ -6,12 +7,15 @@ import logoText from "../../assets/Overwatch2logotext.png";
 
 function Login() {
 
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
   const [verificarLogin, setVerificarLogin] = useState(false);
   const [loginValido, setLoginValido] = useState(false);
   const [tentouLogin, setTentouLogin] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
   const mostrarErro =
     tentouLogin &&
@@ -27,6 +31,12 @@ function Login() {
 
       if (email === "gabriel" && senha === "123456789") {
         setLoginValido(true);
+        setCarregando(true);
+
+        setTimeout(() => {
+          navigate("/main");
+
+        }, 3000)
       } else {
         setLoginValido(false);
       }
@@ -81,18 +91,19 @@ function Login() {
 
         {mostrarSucesso && (
           <p className={styles.sucesso}>
-            Login realizado com sucesso!
+            login correto!
           </p>
         )}
 
         <button
           className={styles.button}
+          disabled={carregando}
           onClick={() => {
             setTentouLogin(true);
             setVerificarLogin(true);
           }}
         >
-          LOGIN
+          {carregando ? "CONECTANDO..." : "LOGIN"}
         </button>
 
       </div>
