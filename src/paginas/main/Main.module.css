@@ -1,0 +1,27 @@
+.container {
+  height: 100vh;
+
+  padding-left: 40px;
+  padding-top: 105px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+}
+
+.logoContainer {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.logo {
+  width: 80px;
+}
+
+.logoText {
+  width: 250px;
+  display: block;
+}

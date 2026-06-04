@@ -1,0 +1,23 @@
+.item {
+  color: white;
+
+  font-size: 3.6rem;
+
+  font-weight: 900;
+
+  font-style: italic;
+
+  margin: 0;
+
+  line-height: 0.9;
+
+  cursor: pointer;
+
+  text-transform: uppercase;
+}
+
+.item:hover {
+  transform: translateX(10px);
+
+  transition: 0.3s;
+}
