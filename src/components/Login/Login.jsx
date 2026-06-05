@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import styles from "./Login.module.css";
 import background from "../../assets/overwatchbackground.jpeg";
@@ -18,13 +18,12 @@ function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [carregando, setCarregando] = useState(false);
+  const [dispararLogin, setDispararLogin] = useState(false);
 
   const iniciarMusica = () => {
-   
     if (window.__audioStarted) return;
     window.__audioStarted = true;
 
-  
     audioLogin = new Audio(loginMusic);
     audioLogin.loop = true;
     audioLogin.volume = 0.8;
@@ -38,25 +37,41 @@ function Login() {
 
   const fazerLogin = () => {
     setCarregando(true);
-
-    if (email === "gabriel" && senha === "123456789") {
-      setTimeout(() => {
-        if (audioLogin) {
-          audioLogin.pause();
-          audioLogin.currentTime = 0;
-        }
-
-        if (audioMain) {
-          audioMain.volume = 1;
-        }
-
-        navigate("/main");
-      }, 2000);
-    } else {
-      setCarregando(false);
-      alert("Login inválido");
-    }
+    setDispararLogin(true);
   };
+
+  useEffect(() => {
+    if (!dispararLogin) return;
+
+    console.log("useEffect disparado!!: tentativa de login validando...")
+
+    const autenticar = () => {
+      if (email === "gabriel" && senha === "123456789") {
+        console.log("login valido: gabriel autenticado")
+        setTimeout(() => {
+          if (audioLogin) {
+            audioLogin.pause();
+            audioLogin.currentTime = 0;
+          }
+
+          if (audioMain) {
+            audioMain.volume = 1;
+          }
+
+          navigate("/main");
+        }, 2000);
+      } else {
+        console.log("login invalido!!: usuario nao foi autenticado")
+        setCarregando(false);
+        alert("Login inválido");
+      }
+      
+      console.log("retetando o gatilho de login...")
+      setDispararLogin(false);
+    };
+
+    autenticar();
+  }, [dispararLogin]);
 
   return (
     <div

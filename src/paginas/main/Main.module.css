@@ -1,4 +1,11 @@
+@font-face { font-family: "Overwatch";
+  src: url("../../assets/fonts/overwatch.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .container {
+  font-family: "Overwatch";
   height: 100vh;
   width: 100vw;
 
