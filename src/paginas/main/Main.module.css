@@ -1,8 +1,9 @@
 .container {
   height: 100vh;
+  width: 100vw;
 
-  padding-left: 40px;
-  padding-top: 105px;
+  padding-left: 18px;
+  padding-top: 30px;
 
   background-size: cover;
   background-position: center;
@@ -12,16 +13,23 @@
 }
 
 .logoContainer {
-  position: absolute;
-  top: 30px;
-  left: 30px;
+   margin-bottom: 30px;
 }
 
 .logo {
-  width: 80px;
+  width: 130px;
+  margin: 5px;
 }
 
 .logoText {
-  width: 250px;
+  width: 285px;
   display: block;
+}
+
+.menuPrincipal {
+  margin-top: 20px;
+}
+
+.menuSecundario {
+  margin-top: 15px;
 }

@@ -10,11 +10,11 @@ import styles from "./Main.module.css";
 function Main() {
   return (
     <div
-  className={styles.container}
-  style={{
-    backgroundImage: `url(${background})`
-  }}
->
+      className={styles.container}
+      style={{
+        backgroundImage: `url(${background})`
+      }}
+    >
 
       <div className={styles.logoContainer}>
         <img
@@ -30,17 +30,19 @@ function Main() {
         />
       </div>
 
-      <MenuItem texto="PLAY" />
-      <MenuItem texto="HEROES" />
-      <MenuItem texto="SHOP" />
-      <MenuItem texto="BATTLE PASS" />
+      <div className={styles.menuPrincipal}>
+        <MenuItem texto="PLAY" />
+        <MenuItem texto="HEROES" />
+        <MenuItem texto="SHOP" />
+        <MenuItem texto="BATTLE PASS" />
+      </div>
 
-      <br />
-
-      <MenuSecundario texto="LOOT BOXES" />
-      <MenuSecundario texto="SOCIAL" />
-      <MenuSecundario texto="CAREER PROFILE" />
-      <MenuSecundario texto="CHALLENGES" />
+      <div className={styles.menuSecundario}>
+        <MenuSecundario texto="LOOT BOXES" />
+        <MenuSecundario texto="SOCIAL" />
+        <MenuSecundario texto="CAREER PROFILE" />
+        <MenuSecundario texto="CHALLENGES" />
+      </div>
 
     </div>
   );

@@ -1,78 +1,79 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+
 import styles from "./Login.module.css";
 import background from "../../assets/overwatchbackground.jpeg";
 import logo from "../../assets/overwatch2logovsign.png";
 import logoText from "../../assets/Overwatch2logotext.png";
 
-function Login() {
+import loginMusic from "../../assets/overwatchlogin.m4a";
+import mainMusic from "../../assets/overwatchmain.m4a";
 
+let audioLogin = null;
+let audioMain = null;
+
+function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
-  const [verificarLogin, setVerificarLogin] = useState(false);
-  const [loginValido, setLoginValido] = useState(false);
-  const [tentouLogin, setTentouLogin] = useState(false);
   const [carregando, setCarregando] = useState(false);
 
-  const mostrarErro =
-    tentouLogin &&
-    !loginValido;
+  const iniciarMusica = () => {
+   
+    if (window.__audioStarted) return;
+    window.__audioStarted = true;
 
-  const mostrarSucesso =
-    tentouLogin &&
-    loginValido;
+  
+    audioLogin = new Audio(loginMusic);
+    audioLogin.loop = true;
+    audioLogin.volume = 0.8;
+    audioLogin.play();
 
-  useEffect(() => {
+    audioMain = new Audio(mainMusic);
+    audioMain.loop = true;
+    audioMain.volume = 0;
+    audioMain.play();
+  };
 
-    if (verificarLogin) {
+  const fazerLogin = () => {
+    setCarregando(true);
 
-      if (email === "gabriel" && senha === "123456789") {
-        setLoginValido(true);
-        setCarregando(true);
+    if (email === "gabriel" && senha === "123456789") {
+      setTimeout(() => {
+        if (audioLogin) {
+          audioLogin.pause();
+          audioLogin.currentTime = 0;
+        }
 
-        setTimeout(() => {
-          navigate("/main");
+        if (audioMain) {
+          audioMain.volume = 1;
+        }
 
-        }, 3000)
-      } else {
-        setLoginValido(false);
-      }
-
-      setVerificarLogin(false);
+        navigate("/main");
+      }, 2000);
+    } else {
+      setCarregando(false);
+      alert("Login inválido");
     }
-
-  }, [verificarLogin, email, senha]);
+  };
 
   return (
     <div
       className={styles.container}
-      style={{
-        backgroundImage: `url(${background})`
-      }}
+      style={{ backgroundImage: `url(${background})` }}
     >
       <div className={styles.loginBox}>
-
-        <img
-          src={logo}
-          alt="Overwatch Logo"
-          className={styles.logo}
-        />
-
-        <img
-          src={logoText}
-          alt="Overwatch Text"
-          className={styles.logoText}
-        />
+        <img src={logo} className={styles.logo} />
+        <img src={logoText} className={styles.logoText} />
 
         <input
           className={styles.input}
           type="text"
-          placeholder="Email or Phone"
+          placeholder="Email"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onFocus={iniciarMusica}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
@@ -80,32 +81,17 @@ function Login() {
           type="password"
           placeholder="Password"
           value={senha}
-          onChange={(event) => setSenha(event.target.value)}
+          onFocus={iniciarMusica}
+          onChange={(e) => setSenha(e.target.value)}
         />
-
-        {mostrarErro && (
-          <p className={styles.erro}>
-            Email ou senha incorretos.
-          </p>
-        )}
-
-        {mostrarSucesso && (
-          <p className={styles.sucesso}>
-            login correto!
-          </p>
-        )}
 
         <button
           className={styles.button}
           disabled={carregando}
-          onClick={() => {
-            setTentouLogin(true);
-            setVerificarLogin(true);
-          }}
+          onClick={fazerLogin}
         >
           {carregando ? "CONECTANDO..." : "LOGIN"}
         </button>
-
       </div>
     </div>
   );
